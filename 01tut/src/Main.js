@@ -14,11 +14,18 @@ const Main = () => {
   const handleClickParams = (name)=>{
     console.log(`${name} was clicked`)
   }
+
+  const handleEvent = (e) => {
+    console.log(e)
+    console.log(e.target)
+    console.log(e.target.innerText)
+  }
   return (
     <main>
       <p>Hello {handleNameChange()}</p>
       <button onClick={handleClick}>Click it</button>
       <button onClick={() => handleClickParams("Dat")}>Click it</button>
+      <button onClick={handleEvent}>Event</button>
     </main>
   );
 };
