@@ -1,19 +1,16 @@
 import React, { useState } from "react";
 import { FaTrashAlt } from "react-icons/fa";
 
-const SearchBar = () => {
-  const [needle, setNeedle] = useState(" ");
-
-  const handleChange = (e) => {
-    e.stopPropagation();
-    setNeedle(e.target.value);
-    console.log(e.target.value);
-  };
-
+const SearchBar = ({ needle, setNeedle }) => {
   return (
-    <div className="SearchBar">
-      <input type="text" value={needle} onChange={(e) => handleChange(e)} />
-    </div>
+    <form className="SearchBar" onSubmit={(e) => e.preventDefault()}>
+      <input
+        type="text"
+        value={needle}
+        onChange={(e) => setNeedle(e.target.value)}
+      />
+      <input type="submit" hidden />
+    </form>
   );
 };
 
@@ -31,25 +28,7 @@ const TaskLine = ({ task, handleCheckbox, handleDelete }) => {
   );
 };
 
-const TaskList = () => {
-  const [taskList, setTaskList] = useState([
-    {
-      id: 1,
-      text: "Task 1",
-      completed: false,
-    },
-    {
-      id: 2,
-      text: "Task 2",
-      completed: true,
-    },
-    {
-      id: 3,
-      text: "Task 3",
-      completed: false,
-    },
-  ]);
-
+const TaskList = ({ taskList, setTaskList }) => {
   const handleCheckbox = (id) => {
     const updatedTaskList = taskList.map((task) => {
       if (task.id === id) {
@@ -82,10 +61,35 @@ const TaskList = () => {
 };
 
 const Main = () => {
+  const [taskList, setTaskList] = useState([
+    {
+      id: 1,
+      text: "Task 1",
+      completed: false,
+    },
+    {
+      id: 2,
+      text: "Task 2",
+      completed: true,
+    },
+    {
+      id: 3,
+      text: "Task 3",
+      completed: false,
+    },
+  ]);
+
+  const [needle, setNeedle] = useState("");
+
   return (
     <main className="Main">
-      <SearchBar />
-      <TaskList />
+      <SearchBar needle={needle} setNeedle={setNeedle} />
+      <TaskList
+        taskList={taskList.filter((task) =>
+          task.text.toLowerCase().includes(needle.toLowerCase() )
+        )}
+        setTaskList={setTaskList}
+      />
     </main>
   );
 };
