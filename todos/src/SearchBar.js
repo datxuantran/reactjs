@@ -1,12 +1,12 @@
 import React from "react";
 
-const SearchBar = ({ needle, setNeedle }) => {
+const SearchBar = ({ searchTerm, setSearchTerm }) => {
   return (
     <form className="SearchBar" onSubmit={(e) => e.preventDefault()}>
       <input
         type="text"
-        value={needle}
-        onChange={(e) => setNeedle(e.target.value)}
+        value={searchTerm}
+        onChange={(e) => setSearchTerm(e.target.value)}
       />
       <input type="submit" hidden />
     </form>
