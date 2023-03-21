@@ -15,6 +15,8 @@ const AddBar = ({ newTask, setNewTask, addNewTask }) => {
         value={newTask}
         onChange={(e) => setNewTask(e.target.value)}
         placeholder="Add Task"
+        required
+        autoFocus
       />
       <button type="submit" aria-label="Add Item">
         <FaPlus />
