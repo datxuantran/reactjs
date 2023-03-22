@@ -1,12 +1,12 @@
 import React from "react";
-import TaskList from "./ListTasks";
+import ListTasks from "./ListTasks";
 
-const Content = ({ taskList, handleCheckbox, handleDelete }) => {
+const Content = ({ listTasks, handleCheckbox, handleDelete }) => {
   return (
     <>
-      {taskList.length ? (
-        <TaskList
-          taskList={taskList}
+      {listTasks.length ? (
+        <ListTasks
+          listTasks={listTasks}
           handleCheckbox={handleCheckbox}
           handleDelete={handleDelete}
         />

@@ -97,22 +97,28 @@ function App() {
   };
 
   return (
-    <div className="App">
-      <Header />
+    <div className="app">
+      <Header className="header" />
 
       <AddBar
         newTask={newTask}
         setNewTask={setNewTask}
         addNewTask={addNewTask}
+        className="addbar"
       />
 
-      <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
+      <SearchBar
+        className="searchBar"
+        searchTerm={searchTerm}
+        setSearchTerm={setSearchTerm}
+      />
 
       {isLoading && <p style={{ color: "green" }}>Loading tasks...</p>}
       {fetchError && <p style={{ color: "red" }}>{fetchError}</p>}
       {!fetchError && !isLoading && (
         <Content
-          taskList={listTasks.filter((task) =>
+          className="content"
+          listTasks={listTasks.filter((task) =>
             task.text.toLowerCase().includes(searchTerm.toLowerCase())
           )}
           handleCheckbox={handleCheckbox}

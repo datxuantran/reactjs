@@ -3,7 +3,7 @@ import { FaTrashAlt } from "react-icons/fa";
 
 const TaskLine = ({ task, handleCheckbox, handleDelete }) => {
   return (
-    <li>
+    <li className="taskLine">
       <input
         type="checkbox"
         checked={task.completed}

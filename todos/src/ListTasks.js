@@ -1,10 +1,10 @@
 import React from "react";
 import TaskLine from "./TaskLine";
 
-const TaskList = ({ taskList, handleCheckbox, handleDelete }) => {
+const ListTasks = ({ listTasks, handleCheckbox, handleDelete }) => {
   return (
-    <ul>
-      {taskList.map((task) => {
+    <ul className="listTasks">
+      {listTasks.map((task) => {
         return (
           <TaskLine
             key={task.id}
@@ -18,4 +18,4 @@ const TaskList = ({ taskList, handleCheckbox, handleDelete }) => {
   );
 };
 
-export default TaskList;
+export default ListTasks;
