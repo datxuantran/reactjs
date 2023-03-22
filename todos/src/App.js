@@ -1,9 +1,9 @@
 import Header from "./Header";
-import TaskList from "./TaskList";
 import AddBar from "./AddBar";
 import SearchBar from "./SearchBar";
+import Content from "./Content";
 import Footer from "./Footer";
-import { useState, useEffect} from "react";
+import { useState, useEffect } from "react";
 const { v4: uuidv4 } = require("uuid");
 
 function App() {
@@ -14,8 +14,8 @@ function App() {
   const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
-    localStorage.setItem('todoList', JSON.stringify(taskList));
-  }, [taskList])
+    localStorage.setItem("todoList", JSON.stringify(taskList));
+  }, [taskList]);
 
   const addNewTask = (newTask) => {
     const updatedTaskList = [
@@ -51,17 +51,13 @@ function App() {
 
       <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
 
-      {taskList.length ? (
-        <TaskList
-          taskList={taskList.filter((task) =>
-            task.text.toLowerCase().includes(searchTerm.toLowerCase())
-          )}
-          handleCheckbox={handleCheckbox}
-          handleDelete={handleDelete}
-        />
-      ) : (
-        <p>Your list is empty</p>
-      )}
+      <Content
+        taskList={taskList.filter((task) =>
+          task.text.toLowerCase().includes(searchTerm.toLowerCase())
+        )}
+        handleCheckbox={handleCheckbox}
+        handleDelete={handleDelete}
+      />
 
       <Footer />
     </div>
