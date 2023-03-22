@@ -7,36 +7,57 @@ import { useState, useEffect } from "react";
 const { v4: uuidv4 } = require("uuid");
 
 function App() {
-  const [taskList, setTaskList] = useState(
-    JSON.parse(localStorage.getItem("todoList")) || []
-  );
+  const [listTasks, setListTasks] = useState([]);
   const [newTask, setNewTask] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
+  const [fetchError, setFetchError] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
 
+  const API_URL = "http://localhost:3500/tasks";
   useEffect(() => {
-    localStorage.setItem("todoList", JSON.stringify(taskList));
-  }, [taskList]);
+    const fetchTasks = async () => {
+      // make sure to catch any errors
+      // so errors will not bubble out as return result of the callback function
+      // which will effect useEffect()
+      try {
+        const response = await fetch(API_URL);
+        if (!response.ok) throw new Error("Did not receive expected data");
+        // console.log(response.json()); //  response.json return a promises
+        const listTasks = await response.json();
+        // console.log(listTasks);
+        setListTasks(listTasks);
+        setFetchError(null);
+      } catch (e) {
+        setFetchError(e.message);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    // call the fetchTasks
+    setTimeout(() => fetchTasks(), 3000);
+  }, []);
 
   const addNewTask = (newTask) => {
-    const updatedTaskList = [
-      ...taskList,
+    const updatedListTasks = [
+      ...listTasks,
       { id: uuidv4(), text: newTask, completed: false },
     ];
-    setTaskList(updatedTaskList);
+    setListTasks(updatedListTasks);
     // save updatedTaskList
-    localStorage.setItem("todoList", JSON.stringify(updatedTaskList));
+    localStorage.setItem("todoList", JSON.stringify(updatedListTasks));
   };
 
   const handleCheckbox = (id) => {
-    const updatedTaskList = taskList.map((task) =>
+    const updatedListTasks = listTasks.map((task) =>
       task.id === id ? { ...task, completed: !task.completed } : task
     );
-    setTaskList(updatedTaskList);
+    setListTasks(updatedListTasks);
   };
 
   const handleDelete = (id) => {
-    const updatedTaskList = taskList.filter((task) => task.id !== id);
-    setTaskList(updatedTaskList);
+    const updatedListTasks = listTasks.filter((task) => task.id !== id);
+    setListTasks(updatedListTasks);
   };
 
   return (
@@ -51,14 +72,17 @@ function App() {
 
       <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
 
-      <Content
-        taskList={taskList.filter((task) =>
-          task.text.toLowerCase().includes(searchTerm.toLowerCase())
-        )}
-        handleCheckbox={handleCheckbox}
-        handleDelete={handleDelete}
-      />
-
+      {isLoading && <p style={{ color: "green" }}>Loading tasks...</p>}
+      {fetchError && <p style={{ color: "red" }}>{fetchError}</p>}
+      {!fetchError && !isLoading && (
+        <Content
+          taskList={listTasks.filter((task) =>
+            task.text.toLowerCase().includes(searchTerm.toLowerCase())
+          )}
+          handleCheckbox={handleCheckbox}
+          handleDelete={handleDelete}
+        />
+      )}
       <Footer />
     </div>
   );
