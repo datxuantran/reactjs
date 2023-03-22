@@ -1,9 +1,11 @@
+import apiRequest from "./apiRequest";
 import Header from "./Header";
 import AddBar from "./AddBar";
 import SearchBar from "./SearchBar";
 import Content from "./Content";
 import Footer from "./Footer";
 import { useState, useEffect } from "react";
+
 const { v4: uuidv4 } = require("uuid");
 
 function App() {
@@ -14,6 +16,8 @@ function App() {
   const [isLoading, setIsLoading] = useState(true);
 
   const API_URL = "http://localhost:3500/tasks";
+
+  // fetch data for each time the page is reloaded
   useEffect(() => {
     const fetchTasks = async () => {
       // make sure to catch any errors
@@ -22,9 +26,7 @@ function App() {
       try {
         const response = await fetch(API_URL);
         if (!response.ok) throw new Error("Did not receive expected data");
-        // console.log(response.json()); //  response.json return a promises
         const listTasks = await response.json();
-        // console.log(listTasks);
         setListTasks(listTasks);
         setFetchError(null);
       } catch (e) {
@@ -35,29 +37,63 @@ function App() {
     };
 
     // call the fetchTasks
-    setTimeout(() => fetchTasks(), 3000);
+    setTimeout(() => fetchTasks(), 1000);
   }, []);
 
-  const addNewTask = (newTask) => {
-    const updatedListTasks = [
-      ...listTasks,
-      { id: uuidv4(), text: newTask, completed: false },
-    ];
-    setListTasks(updatedListTasks);
-    // save updatedTaskList
-    localStorage.setItem("todoList", JSON.stringify(updatedListTasks));
+  const addNewTask = async (taskText) => {
+    const newTask = {
+      id: uuidv4(),
+      text: taskText,
+      completed: false,
+    };
+    const updateListTasks = [...listTasks, newTask];
+    setListTasks(updateListTasks);
+
+    const postOptions = {
+      method: "POST",
+      headers: {
+        "Content-type": "application/json",
+      },
+      body: JSON.stringify(newTask),
+    };
+
+    const errMsg = await apiRequest(API_URL, postOptions);
+    if (errMsg) {
+      setFetchError(errMsg);
+    }
   };
 
-  const handleCheckbox = (id) => {
+  const handleCheckbox = async (id) => {
     const updatedListTasks = listTasks.map((task) =>
       task.id === id ? { ...task, completed: !task.completed } : task
     );
     setListTasks(updatedListTasks);
+
+    const updatedTask = listTasks.filter((task) => task.id === id)[0];
+    console.log(updatedTask);
+    const URL = `${API_URL}/${id}`;
+    const updateOptions = {
+      method: "PATCH",
+      headers: {
+        "Content-type": "application/json",
+      },
+      body: JSON.stringify({ completed: !updatedTask.completed }),
+    };
+    const errMsg = await apiRequest(URL, updateOptions);
+    if (errMsg) setFetchError(errMsg);
   };
 
-  const handleDelete = (id) => {
+  const handleDelete = async (id) => {
     const updatedListTasks = listTasks.filter((task) => task.id !== id);
     setListTasks(updatedListTasks);
+
+    const URL = `${API_URL}/${id}`;
+    const deleteOptions = {
+      method: "DELETE",
+    };
+
+    const errMsg = await apiRequest(URL, deleteOptions);
+    if (errMsg) setFetchError(errMsg);
   };
 
   return (

@@ -3,11 +3,11 @@ import { FaTrashAlt } from "react-icons/fa";
 
 const TaskLine = ({ task, handleCheckbox, handleDelete }) => {
   return (
-    <li key={task.id}>
+    <li>
       <input
         type="checkbox"
         checked={task.completed}
-        onClick={() => handleCheckbox(task.id)}
+        onChange={() => handleCheckbox(task.id)}
       />
       <label
         style={task.completed ? { textDecoration: "line-through" } : null}

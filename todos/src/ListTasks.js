@@ -7,6 +7,7 @@ const TaskList = ({ taskList, handleCheckbox, handleDelete }) => {
       {taskList.map((task) => {
         return (
           <TaskLine
+            key={task.id}
             task={task}
             handleCheckbox={handleCheckbox}
             handleDelete={handleDelete}
