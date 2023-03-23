@@ -13,7 +13,7 @@ const TaskLine = ({ task, handleCheckbox, handleDelete }) => {
         style={task.completed ? { textDecoration: "line-through" } : null}
         onDoubleClick={() => handleCheckbox(task.id)}
       >
-        {task.text}
+        {task.title}
       </label>
       <FaTrashAlt onClick={() => handleDelete(task.id)} />
     </li>

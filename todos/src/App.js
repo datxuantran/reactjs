@@ -15,7 +15,7 @@ function App() {
   const [fetchError, setFetchError] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
 
-  const API_URL = "http://localhost:3500/tasks";
+  const API_URL = "https://jsonplaceholder.typicode.com/todos/";
 
   // fetch data for each time the page is reloaded
   useEffect(() => {
@@ -27,7 +27,9 @@ function App() {
         const response = await fetch(API_URL);
         if (!response.ok) throw new Error("Did not receive expected data");
         const listTasks = await response.json();
-        setListTasks(listTasks);
+
+        let cnt = 0; 
+        setListTasks(listTasks.filter(task => (task.userId === 1 && cnt++ < 5)));
         setFetchError(null);
       } catch (e) {
         setFetchError(e.message);
@@ -40,10 +42,12 @@ function App() {
     setTimeout(() => fetchTasks(), 1000);
   }, []);
 
+  // ADD NEW TASK 
   const addNewTask = async (taskText) => {
     const newTask = {
+      userId: 1,
       id: uuidv4(),
-      text: taskText,
+      title: taskText,
       completed: false,
     };
     const updateListTasks = [...listTasks, newTask];
@@ -52,7 +56,7 @@ function App() {
     const postOptions = {
       method: "POST",
       headers: {
-        "Content-type": "application/json",
+        "Content-type": "application/json; charset=UTF-8", 
       },
       body: JSON.stringify(newTask),
     };
@@ -74,7 +78,7 @@ function App() {
     const updateOptions = {
       method: "PATCH",
       headers: {
-        "Content-type": "application/json",
+        "Content-type": "application/json; charset=UTF-8",
       },
       body: JSON.stringify({ completed: !updatedTask.completed }),
     };
@@ -122,7 +126,7 @@ function App() {
         <Content
           className="content"
           listTasks={listTasks.filter((task) =>
-            task.text.toLowerCase().includes(searchTerm.toLowerCase())
+            task.title.toLowerCase().includes(searchTerm.toLowerCase())
           )}
           handleCheckbox={handleCheckbox}
           handleDelete={handleDelete}
