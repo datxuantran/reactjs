@@ -1,7 +1,7 @@
 import apiRequest from "./apiRequest";
 import Header from "./Header";
-import AddBar from "./AddBar";
-import SearchBar from "./SearchBar";
+import AddForm from "./AddForm";
+import SearchForm from "./SearchForm";
 import Content from "./Content";
 import Footer from "./Footer";
 import { useState, useEffect } from "react";
@@ -70,7 +70,6 @@ function App() {
     setListTasks(updatedListTasks);
 
     const updatedTask = listTasks.filter((task) => task.id === id)[0];
-    console.log(updatedTask);
     const URL = `${API_URL}/${id}`;
     const updateOptions = {
       method: "PATCH",
@@ -100,18 +99,22 @@ function App() {
     <div className="app">
       <Header className="header" />
 
-      <AddBar
-        newTask={newTask}
-        setNewTask={setNewTask}
-        addNewTask={addNewTask}
-        className="addbar"
-      />
+      <div className="form-container">
+        <AddForm
+          className="addForm"
+          newTask={newTask}
+          setNewTask={setNewTask}
+          addNewTask={addNewTask}
+        />
+      </div>
 
-      <SearchBar
-        className="searchBar"
-        searchTerm={searchTerm}
-        setSearchTerm={setSearchTerm}
-      />
+      <div className="form-container">
+        <SearchForm
+          className="searchForm"
+          searchTerm={searchTerm}
+          setSearchTerm={setSearchTerm}
+        />
+      </div>
 
       {isLoading && <p style={{ color: "green" }}>Loading tasks...</p>}
       {fetchError && <p style={{ color: "red" }}>{fetchError}</p>}

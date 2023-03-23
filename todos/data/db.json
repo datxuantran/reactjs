@@ -1,33 +1,28 @@
 {
   "tasks": [
     {
-      "id": "5fdf3cde-719a-4687-aa04-6465ccea134e",
-      "text": "ad",
+      "id": "92a0d336-71ad-4ccc-97f5-bd31ae09de26",
+      "text": "Tôi đi học",
       "completed": true
     },
     {
-      "id": "4e93f555-bd07-4511-820f-da8e2e3490e4",
-      "text": "today",
+      "id": "4c41d282-38b3-4d0b-800e-4a3d66d80558",
+      "text": "Sửa bài tập",
       "completed": true
     },
     {
-      "id": "05f07c39-519c-4c1f-9e52-6468518bf426",
-      "text": "today",
-      "completed": false
+      "id": "c445bd3f-bf1f-4e89-8ac3-d639beb4a12f",
+      "text": "Học tiếng Anh",
+      "completed": true
     },
     {
-      "id": "c20ba965-0f55-43b6-9cf5-6f627242c362",
-      "text": "tomorrow",
-      "completed": false
+      "id": "ea822a70-f48d-4f74-bd90-13d08fc6df46",
+      "text": "Căn chỉnh lề ",
+      "completed": true
     },
     {
-      "id": "eee7710f-41d1-4dc3-b186-7ba497c61d0f",
-      "text": "adsfa",
-      "completed": false
-    },
-    {
-      "id": "aa67be4b-5acf-4852-a6b5-ddd572936b5c",
-      "text": "adsfa",
+      "id": "88231978-a356-44c4-99c8-0a217580a6d0",
+      "text": "Căn chỉnh lề ",
       "completed": false
     }
   ]

@@ -3,7 +3,7 @@ import ListTasks from "./ListTasks";
 
 const Content = ({ listTasks, handleCheckbox, handleDelete }) => {
   return (
-    <>
+    <main>
       {listTasks.length ? (
         <ListTasks
           listTasks={listTasks}
@@ -13,7 +13,7 @@ const Content = ({ listTasks, handleCheckbox, handleDelete }) => {
       ) : (
         <p>Your list is empty</p>
       )}
-    </>
+    </main>
   );
 };
 

@@ -1,10 +1,10 @@
 import React from "react";
 import { FaPlus } from "react-icons/fa";
 
-const AddBar = ({ newTask, setNewTask, addNewTask }) => {
+const AddForm = ({ newTask, setNewTask, addNewTask }) => {
   return (
     <form
-      className="AddBar"
+      className="addForm"
       onSubmit={(e) => {
         e.preventDefault();
         addNewTask(newTask);
@@ -25,4 +25,4 @@ const AddBar = ({ newTask, setNewTask, addNewTask }) => {
   );
 };
 
-export default AddBar;
+export default AddForm;
